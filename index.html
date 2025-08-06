@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="kultra_image.jpeg" type="image/jpeg" />
-    <title>Kultra - Coming Soon</title>
+    <title>Kultrà</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link
@@ -77,11 +77,13 @@
         opacity: 1;
       }
       #kultraVisionContainer {
+        /* Default styles for mobile */
         width: 100%;
-        padding-bottom: 66.66%;
+        height: 300px; /* This sets a fixed height for mobile screens */
         position: relative;
         overflow: hidden;
       }
+
       #kultraVisionCanvas {
         position: absolute;
         top: 0;
@@ -90,17 +92,81 @@
         height: 100%;
         display: block;
       }
+
+      @media (min-width: 300px) and (max-width: 400px) {
+        #seven {
+          display: none;
+        }
+
+        #kultraSeven {
+          margin-top: -100px;
+        }
+      }
+
+      @media (min-width: 400px) and (max-width: 500px) {
+        #seven {
+          display: none;
+        }
+
+        #kultraSeven {
+          margin-top: -300px;
+        }
+      }
+
+      @media (min-width: 501px) and (max-width: 800px) {
+        #seven {
+          display: none;
+        }
+
+        #kultraSeven {
+          margin-top: 0px;
+        }
+      }
+
+      /* Animations for the text elements in the hero section */
+      @keyframes fadeInSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-text-in {
+        animation: fadeInSlideUp 0.8s ease-out forwards;
+        opacity: 0; /* Hidden initially */
+      }
+
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+      .delay-600 {
+        animation-delay: 0.6s;
+      }
+
+      /* Specific style for the logo side background */
+      .hero-logo-background {
+        background-color: #8b4513; /* Primary chocolate color */
+        /* Optional: Add a subtle pattern or gradient if desired */
+        background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.953 4.25a.5.5 0 0 1-.474.407L8.981 4.54l1.373 1.373A1.5 1.5 0 0 1 10 9a1.5 1.5 0 0 1-2.613-.889L5.54 6.981l-3.237 3.237A1.5 1.5 0 0 1 0 9.5a1.5 1.5 0 0 1 2.613.889l3.237-3.237L7.46 8.46a.5.5 0 0 1-.407.474L8.981 8.54l-1.373-1.373A1.5 1.5 0 0 1 7 3a1.5 1.5 0 0 1 2.613.889l3.237 3.237L8.46 5.54a.5.5 0 0 1 .407-.474zM9 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm-8 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z' fill='%236f360f' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+      }
     </style>
   </head>
   <body class="antialiased">
     <nav class="bg-chocolate-dark p-4 shadow-lg sticky top-0 z-50">
       <div class="container mx-auto flex justify-between items-center">
-        <a href="#" class="rounded-md p-2">
+        <a href="https://kultra.co.nz/" class="rounded-md p-2">
           <img
             src="https://i.imgur.com/your-kultra-logo.png"
-            alt="Kultra Logo"
+            alt="Kultrà Logo"
             class="h-10"
-            onerror="this.onerror=null; this.src='https://placehold.co/150x40/4a2c2a/e8d8c4?text=Kultra';"
+            onerror="this.onerror=null; this.src='https://placehold.co/150x40/4a2c2a/e8d8c4?text=Kultr&agrave;';"
           />
         </a>
 
@@ -128,9 +194,9 @@
 
         <div class="hidden md:flex space-x-6">
           <a
-            href="#home"
+            href="#about"
             class="text-chocolate-light hover:text-white transition-colors px-3 py-2 rounded-md"
-            >Home</a
+            >About</a
           >
           <a
             href="#products"
@@ -138,9 +204,9 @@
             >Products</a
           >
           <a
-            href="#about"
+            href="#waitlist"
             class="text-chocolate-light hover:text-white transition-colors px-3 py-2 rounded-md"
-            >About Kultra</a
+            >Orders</a
           >
           <a
             href="#contact"
@@ -155,9 +221,9 @@
         class="hidden md:hidden bg-chocolate-dark mt-2 rounded-md shadow-md"
       >
         <a
-          href="#home"
+          href="#about"
           class="block text-chocolate-light hover:bg-chocolate-dark hover:text-white px-4 py-2 rounded-md"
-          >Home</a
+          >About</a
         >
         <a
           href="#products"
@@ -165,9 +231,9 @@
           >Products</a
         >
         <a
-          href="#about"
+          href="#waitlist"
           class="block text-chocolate-light hover:bg-chocolate-dark hover:text-white px-4 py-2 rounded-md"
-          >About Kultra</a
+          >Orders</a
         >
         <a
           href="#contact"
@@ -179,26 +245,40 @@
 
     <section
       id="home"
-      class="relative h-screen flex items-center justify-center text-center bg-cover bg-center"
-      style="background-image: url('kultra_image.jpeg')"
+      class="flex flex-col md:flex-row h-screen overflow-hidden"
     >
-      <div class="absolute inset-0 bg-black opacity-40"></div>
       <div
-        class="relative z-10 text-white p-6 md:p-12 max-w-4xl mx-auto rounded-lg bg-black bg-opacity-30"
+        class="w-full md:w-1/2 flex items-center justify-center p-8 bg-chocolate-pale text-chocolate-dark text-center"
+        style="background-color: #f3f4f5"
       >
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-          Kultra: Coming Soon!
-        </h1>
-        <p class="text-lg md:text-xl mb-8 opacity-90">
-          Get ready for a unique experience. We're crafting something special
-          just for you. Stay tuned for updates!
-        </p>
-        <a
-          href="#about"
-          class="btn-primary text-lg font-semibold inline-block rounded-full shadow-lg hover:scale-105 transform transition-transform duration-300"
-        >
-          Learn More About Kultra
-        </a>
+        <div class="max-w-2xl">
+          <h1 class="text-4xl md:text-6xl font-extrabold mb-4 animate-text-in">
+            Kultrà:
+          </h1>
+          <p
+            class="text-lg md:text-xl mb-8 opacity-90 animate-text-in delay-200"
+          >
+            Hungry for culture? Step into a world of unique flavors and
+            captivating experiences. Explore our range of chocolates!
+          </p>
+          <a
+            href="#products"
+            class="btn-primary text-lg font-semibold inline-block rounded-full shadow-lg hover:scale-105 transform transition-transform duration-300 animate-text-in delay-400"
+          >
+            Discover Our Products
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="w-full md:w-1/2 flex items-center justify-center p-8 hero-logo-background"
+      >
+        <img
+          src="kultra_image.jpeg"
+          alt="Kultrà Logo Large"
+          class="max-h-full max-w-full object-contain p-4 animate-text-in delay-600"
+          onerror="this.onerror=null; this.src='https://placehold.co/400x400/8b4513/e8d8c4?text=Kultr&agrave;+Logo';"
+        />
       </div>
     </section>
 
@@ -206,27 +286,28 @@
       <div
         class="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center gap-12"
       >
-        <div class="md:w-1/2">
+        <div class="md:w-1/2" id="seven">
           <div id="kultraVisionContainer">
             <canvas id="kultraVisionCanvas"></canvas>
           </div>
         </div>
-        <div class="md:w-1/2 text-center md:text-left">
+        <div class="md:w-1/2 text-center md:text-left" id="kultraSeven">
           <h2 class="text-4xl font-bold text-chocolate-dark mb-6">
-            Our Vision for Kultra
+            Our Vision for Kultrà
           </h2>
           <p class="text-lg leading-relaxed mb-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-            auctor, justo vel ultrices ultrices, justo odio fermentum odio, nec
-            ullamcorper justo justo vel justo. Sed euismod, nisl eget
-            consectetur consectetur, nisl nisi consectetur nisi, nec consectetur
-            nisi nisi vel nisi.
-          </p>
-          <p class="text-lg leading-relaxed">
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
+            Our business idea is to share our love for cultures across the world
+            through food. And we’ve chosen chocolate as our tool. We’ll use a
+            New Zealand-made chocolate base and incorporate flavours, toppings,
+            and elements that tell unique stories from different regions around
+            the globe. Each flavour will represent a special moment or cultural
+            experience, connecting people across land and ocean. Our vision is
+            to offer a range of handcrafted chocolate bars, where every flavour
+            is a journey. Our mission is to make the world feel more
+            connected—one flavour at a time. Our values include sustainability,
+            cultural respect, and collaboration. We’re committed to using local
+            ingredients, partnering with regional suppliers, and ensuring our
+            brand aligns with both environmental and cultural responsibility.
           </p>
         </div>
       </div>
@@ -243,54 +324,109 @@
             class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 border border-gray-200"
           >
             <img
-              src="https://placehold.co/400x200/5C7D5C/FFFFFF?text=Upcoming+Product+1"
+              src="imageOne.png"
               alt="Upcoming Product 1"
               class="product-image mb-4"
             />
             <h3 class="text-2xl font-semibold text-chocolate-dark mb-2">
-              Product One
+              Coffee with Almond (Whittaker’s Milk Chocolate Base)
             </h3>
             <p class="text-gray-700 mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              This flavour captures the essence of South America with its robust
+              coffee - a staple crop in Brazil and Colombia, known worldwide for
+              its richness and aroma. The almonds offer a nutty crunch, often
+              enjoyed in South American desserts. Paired with Whittaker’s Milk
+              Chocolate, this bar pays homage to the region’s deep coffee
+              culture and agricultural diversity.
             </p>
-            <button class="btn-primary text-sm">Stay Tuned</button>
           </div>
 
           <div
             class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 border border-gray-200"
           >
             <img
-              src="https://placehold.co/400x200/B22222/FFFFFF?text=Upcoming+Product+2"
+              src="imageTwo.png"
               alt="Upcoming Product 2"
               class="product-image mb-4"
             />
             <h3 class="text-2xl font-semibold text-chocolate-dark mb-2">
-              Product Two
+              Chill with Mango (Whittaker’s Milk Chocolate Base)
             </h3>
             <p class="text-gray-700 mb-4">
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              Inspired by African flavour profiles, this chocolate brings
+              together the heat of African chilli peppers – common in North and
+              West African cooking – with the tropical sweetness of mango,
+              widely grown across East Africa. The combination reflects the
+              continent’s vibrant cuisine, where bold spices and fresh fruits
+              often collide in unforgettable ways.
             </p>
-            <button class="btn-primary text-sm">Stay Tuned</button>
           </div>
 
           <div
             class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 border border-gray-200"
           >
             <img
-              src="https://placehold.co/400x200/6B8E23/FFFFFF?text=Upcoming+Product+3"
+              src="imageThree.png"
               alt="Upcoming Product 3"
               class="product-image mb-4"
             />
             <h3 class="text-2xl font-semibold text-chocolate-dark mb-2">
-              Product Three
+              Matcha with Raspberry (Whittaker’s White Chocolate Base)
             </h3>
             <p class="text-gray-700 mb-4">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur.
+              This limited-edition bar draws on Japan’s ceremonial-grade matcha,
+              a symbol of East Asian tradition, tranquillity, and craftsmanship.
+              Combined with tart raspberry – a nod to the growing fusion of
+              Western fruits in East Asian desserts – it celebrates the balance
+              of ancient tea rituals and modern patisserie. The white chocolate
+              base enhances the elegance of the blend.
             </p>
-            <button class="btn-primary text-sm">Stay Tuned</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="waitlist" class="py-16 bg-fdfaf6">
+      <div class="container mx-auto px-4 md:px-8">
+        <h2 class="text-4xl font-bold text-center text-chocolate-dark mb-12">
+          Make an Order
+        </h2>
+        <div>
+          <div
+            class="max-w-xl mx-auto rounded-xl shadow-lg p-8 border border-gray-200"
+            style="background-color: #ff6347"
+          >
+            <iframe
+              data-tally-src="https://tally.so/embed/wL2ZVO?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+              loading="lazy"
+              width="100%"
+              height="auto"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              title="Kultra Form"
+            ></iframe>
+            <script>
+              var d = document,
+                w = "https://tally.so/widgets/embed.js",
+                v = function () {
+                  "undefined" != typeof Tally
+                    ? Tally.loadEmbeds()
+                    : d
+                        .querySelectorAll("iframe[data-tally-src]:not([src])")
+                        .forEach(function (e) {
+                          e.src = e.dataset.tallySrc;
+                        });
+                };
+              if ("undefined" != typeof Tally) v();
+              else if (d.querySelector('script[src="' + w + '"]') == null) {
+                var s = d.createElement("script");
+                (s.src = w),
+                  (s.onload = v),
+                  (s.onerror = v),
+                  d.body.appendChild(s);
+              }
+            </script>
           </div>
         </div>
       </div>
@@ -308,7 +444,9 @@
           <div class="mb-6">
             <p class="text-lg text-gray-700 mb-2">
               <strong>Email:</strong>
-              <span id="company-email">example@gmail.com</span>
+              <span id="company-email"
+                >ishaan.badiyani@whitbycollegiate<br />.school.nz</span
+              >
               <button
                 class="ml-2 px-3 py-1 bg-chocolate-dark text-white text-sm rounded-md hover:bg-6F360F transition-colors"
                 onclick="copyToClipboard('company-email', 'Email copied!')"
@@ -316,19 +454,9 @@
                 Copy
               </button>
             </p>
-            <p class="text-lg text-gray-700">
-              <strong>Phone:</strong>
-              <span id="company-phone">0123456789</span>
-              <button
-                class="ml-2 px-3 py-1 bg-chocolate-dark text-white text-sm rounded-md hover:bg-6F360F transition-colors"
-                onclick="copyToClipboard('company-phone', 'Phone number copied!')"
-              >
-                Copy
-              </button>
-            </p>
           </div>
           <p class="text-gray-600">
-            Have questions about Kultra? Feel free to reach out to us! We'd love
+            Have questions about Kultrà? Feel free to reach out to us! We'd love
             to hear from you.
           </p>
         </div>
@@ -337,9 +465,11 @@
 
     <footer class="bg-chocolate-dark text-chocolate-light py-8">
       <div class="container mx-auto px-4 md:px-8 text-center">
-        <p>&copy; 2025 Kultra. All rights reserved.</p>
+        <p>&copy; 2025 Kultrà. All rights reserved.</p>
         <div class="flex justify-center space-x-6 mt-4">
-          <a href="#" class="hover:text-white transition-colors">Instagram</a>
+          <a href="#" class="hover:text-white transition-colors"
+            >Instagram: @kultra.co.nz</a
+          >
         </div>
       </div>
     </footer>
@@ -399,7 +529,7 @@
           context.textAlign = "center";
           context.textBaseline = "middle";
           context.fillText(
-            "Kultra",
+            "Kultrà",
             textCanvas.width / 2,
             textCanvas.height / 2 - 40
           );
@@ -482,6 +612,14 @@
             messageBox.classList.remove("show");
           }, 2000);
         }
+      }
+
+      function isMobile() {
+        const userAgent =
+          navigator.userAgent || navigator.vendor || window.opera;
+        return /android|iphone|ipad|ipod|blackberry|windows phone/i.test(
+          userAgent
+        );
       }
     </script>
   </body>
